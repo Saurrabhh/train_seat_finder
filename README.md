@@ -1,5 +1,6 @@
 # Train Seat Finder 
-### Seat Finder for trains with multi-seat search.
+### Seat Finder for trains with multi-seat search separated by commas.
+### Navigates user to the selected seat.
 ### Responsive Seat Layout.
 ### Reusable widgets for different coaches like 3AC, 2AC, 1AC.
 
