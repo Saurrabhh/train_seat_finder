@@ -1,16 +1,11 @@
-# train_seat_finder
+# Train Seat Finder 
+### Seat Finder for trains with multi-seat search.
+### Responsive Seat Layout.
+### Reusable widgets for different coaches like 3AC, 2AC, 1AC.
 
-A new Flutter project.
+### Video Link: https://drive.google.com/file/d/101yCAjc_HtEOFelZRP34PjqyFOA3EWAw/view?usp=sharing
 
-## Getting Started
+https://github.com/Saurrabhh/train_seat_finder/assets/79056681/eaf96666-082a-4ee6-8d04-160d4e609968
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
