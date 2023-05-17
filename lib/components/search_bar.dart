@@ -19,6 +19,32 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
+  searchSeats() {
+    String searchString = widget.controller.text;
+    if (searchString.isEmpty) {
+      return;
+    }
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (searchString.endsWith(',')) {
+      searchString = searchString.substring(0, searchString.length - 1);
+    }
+    List<int> searchSeatList =
+        searchString.split(',').map(int.parse).toSet().toList();
+    searchSeatList.removeWhere((element) => element < 1 || element > 72);
+    if (searchSeatList.isEmpty) {
+      return;
+    }
+    searchSeatList.sort();
+    Provider.of<SeatFinderService>(context, listen: false)
+        .setSearchSeatList(searchSeatList);
+    double cabinNo = searchSeatList[0] / 8;
+    cabinNo = cabinNo > 4 ? cabinNo.ceilToDouble() : cabinNo.floorToDouble();
+    if (searchSeatList[0] % 8 == 0 && cabinNo < 4) {
+      cabinNo -= 1;
+    }
+    widget.scrollToCabin(cabinNo);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,9 +69,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 child: TextFormField(
                   controller: widget.controller,
                   keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
+                  onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(
                     hintText: "Enter Seat Number...",
                     hintStyle: Theme.of(context).textTheme.titleLarge,
@@ -64,35 +88,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                           widget.controller.text.isEmpty
                               ? Colors.grey.shade400
                               : kPrimaryColor)),
-                  onPressed: () {
-                    String searchString = widget.controller.text;
-                    if (searchString.isEmpty) {
-                      return;
-                    }
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    if (searchString.endsWith(',')) {
-                      searchString =
-                          searchString.substring(0, searchString.length - 1);
-                    }
-                    List<int> searchSeatList =
-                        searchString.split(',').map(int.parse).toSet().toList();
-                    searchSeatList
-                        .removeWhere((element) => element < 1 || element > 72);
-                    if (searchSeatList.isEmpty) {
-                      return;
-                    }
-                    searchSeatList.sort();
-                    Provider.of<SeatFinderService>(context, listen: false)
-                        .setSearchSeatList(searchSeatList);
-                    double cabinNo = searchSeatList[0] / 8;
-                    cabinNo = cabinNo > 4
-                        ? cabinNo.ceilToDouble()
-                        : cabinNo.floorToDouble();
-                    if (searchSeatList[0] % 8 == 0 && cabinNo < 4) {
-                      cabinNo -= 1;
-                    }
-                    widget.scrollToCabin(cabinNo);
-                  },
+                  onPressed: searchSeats,
                   child: Text(
                     "Find",
                     style: Theme.of(context).textTheme.labelLarge,
