@@ -34,10 +34,10 @@ class _MainDashboardState extends State<MainDashboard> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child : Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +91,7 @@ class _MainDashboardState extends State<MainDashboard> {
             GridView.count(
                 crossAxisCount: 6,
                 mainAxisSpacing: 1,
-                crossAxisSpacing: 3,
+                crossAxisSpacing: 5,
                 childAspectRatio: 2,
                 shrinkWrap: true,
                 children: seatFinderService.searchSeatList
