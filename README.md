@@ -1,8 +1,10 @@
 # Train Seat Finder 
+
 ### Seat Finder for trains with multi-seat search separated by commas.
 ### Navigates user to the selected seat.
 ### Responsive Seat Layout.
 ### Reusable widgets for different coaches like 3AC, 2AC, 1AC.
+### Project supports MVVM Architecture by using Provider.
 
 ### Video Link: https://drive.google.com/file/d/101yCAjc_HtEOFelZRP34PjqyFOA3EWAw/view?usp=sharing
 
