@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:train_seat_finder/services/seat_finder_service.dart';
-
 import '../constants.dart';
 import '../size_config.dart';
 
@@ -9,11 +8,11 @@ class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({
     super.key,
     required this.controller,
-    required this.f,
+    required this.scrollToCabin,
   });
 
   final TextEditingController controller;
-  final Function(double) f;
+  final Function(double) scrollToCabin;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
@@ -66,17 +65,33 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                               ? Colors.grey.shade400
                               : kPrimaryColor)),
                   onPressed: () {
-                    int seatNo = int.parse(widget.controller.text);
-                    double cabinN0 = seatNo / 8;
-
-                    cabinN0 = cabinN0 > 4
-                        ? cabinN0.ceilToDouble()
-                        : cabinN0.floorToDouble();
-
-                    double percent = cabinN0 / 9;
+                    String searchString = widget.controller.text;
+                    if (searchString.isEmpty) {
+                      return;
+                    }
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (searchString.endsWith(',')) {
+                      searchString =
+                          searchString.substring(0, searchString.length - 1);
+                    }
+                    List<int> searchSeatList =
+                        searchString.split(',').map(int.parse).toSet().toList();
+                    searchSeatList
+                        .removeWhere((element) => element < 1 || element > 72);
+                    if (searchSeatList.isEmpty) {
+                      return;
+                    }
+                    searchSeatList.sort();
                     Provider.of<SeatFinderService>(context, listen: false)
-                        .updateSeat(seatNo);
-                    widget.f(percent);
+                        .setSearchSeatList(searchSeatList);
+                    double cabinNo = searchSeatList[0] / 8;
+                    cabinNo = cabinNo > 4
+                        ? cabinNo.ceilToDouble()
+                        : cabinNo.floorToDouble();
+                    if (searchSeatList[0] % 8 == 0 && cabinNo < 4) {
+                      cabinNo -= 1;
+                    }
+                    widget.scrollToCabin(cabinNo);
                   },
                   child: Text(
                     "Find",

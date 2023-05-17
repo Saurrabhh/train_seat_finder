@@ -31,6 +31,11 @@ class MyTheme {
         fontFamily: 'Noopla',
         fontSize: 10
       ),
+      bodyMedium: TextStyle(
+        color: kPrimaryColor,
+        fontFamily: 'Noopla',
+        // fontSize: 10
+      ),
       labelLarge: TextStyle(
         color: Colors.white,
         fontFamily: 'Noopla',

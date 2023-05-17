@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart';
 
-class SeatFinderService extends ChangeNotifier{
+class SeatFinderService extends ChangeNotifier {
+  List<int> _searchSeatList = [];
+  List<int> get searchSeatList => _searchSeatList;
 
-  int _searchSeat = 0;
-  int get searchSeat => _searchSeat;
-
-  updateSeat(int newSeat){
-    _searchSeat = newSeat;
+  setSearchSeatList(List<int> newSearchSeatList) {
+    _searchSeatList = newSearchSeatList;
     notifyListeners();
   }
-
 }
